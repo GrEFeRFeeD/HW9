@@ -1,9 +1,11 @@
 package collections.lists;
 
+import collections.lists.MyList;
+
 import java.util.Collection;
 import java.util.Iterator;
 
-public class MyArrayList<E> implements MyList<E> {
+public final class MyArrayList<E> implements MyList<E> {
 
     private E[] array;
     private int headIndex;
