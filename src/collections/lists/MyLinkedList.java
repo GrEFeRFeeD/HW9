@@ -13,12 +13,14 @@ public final class MyLinkedList<E> implements MyList<E>{
     private int elementsCount;
 
     public MyLinkedList() {
-        clear();
+        head = tail = null;
+        elementsCount = 0;
     }
 
     public MyLinkedList(Collection<E> collection) {
-        for (E element : collection) {
-            add(element);
+        this();
+        for (E value : collection) {
+            add(value);
         }
     }
 

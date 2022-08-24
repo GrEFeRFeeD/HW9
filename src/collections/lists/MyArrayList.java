@@ -16,8 +16,8 @@ public final class MyArrayList<E> implements MyList<E> {
 
     public MyArrayList(Collection<E> collection) {
         array = (E[]) new Object[collection.size() * 3 / 2];
-        for (E element : collection) {
-            add(element);
+        for (E value : collection) {
+            add(value);
         }
     }
 
