@@ -12,25 +12,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        MyLIFOStack<Integer> myStack = new MyStack<>(List.of(1, 2, 3, 4, 5));
-        System.out.println();
-        while (myStack.size() > 0) {
-            System.out.println("Top value is " + myStack.peek() + ", size is " + myStack.size());
-            myStack.remove();
-        }
-
-        for (int i = 0; i < 100; ++i) {
-            myStack.push(i);
-        }
-
-        while (myStack.size() > 0) {
-            System.out.println("Top value is " + myStack.peek() + ", size is " + myStack.size());
-            myStack.remove();
-        }
-
-        System.out.println("Top value is " + myStack.peek() + ", size is " + myStack.size());
-        myStack.remove();
-
         /*
         MyList<Integer> myList = new MyLinkedList<>();
         System.out.println(myList);
