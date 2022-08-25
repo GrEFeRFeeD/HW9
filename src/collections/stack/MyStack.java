@@ -67,14 +67,4 @@ public class MyStack<E> implements MyLIFOStack<E> {
 
         return nodeToDelete.getValue();
     }
-
-    @Override
-    public String toString() {
-        StringBuffer sb = new StringBuffer("{ ");
-        for (LinkedNode<E> i = head; i != null; i = i.getNext()) {
-            sb.append(i.getValue()).append(", ");
-        }
-        sb.append("} size = ").append(elementsCount);
-        return sb.toString();
-    }
 }
