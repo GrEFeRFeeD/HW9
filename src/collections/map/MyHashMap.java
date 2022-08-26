@@ -158,18 +158,6 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         return null;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder("{ ");
-        for (EntryNode<K, V> node : array) {
-            for (EntryNode<K, V> iNode = node; iNode != null; iNode = (EntryNode<K, V>) iNode.getNext()) {
-                sb.append("[").append(iNode.getKey()).append("; ").append(iNode.getValue()).append("], ");
-            }
-        }
-        sb.append("}, elementsCount = ").append(elementsCount).append(", arrayLength = ").append(array.length);
-        return sb.toString();
-    }
-
     public static class EntryNode<K, V> extends LinkedNode<V> {
 
         private final K key;

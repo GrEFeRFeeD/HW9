@@ -33,8 +33,22 @@ public final class MyStack<E> implements MyLIFOStack<E> {
     }
 
     @Override
-    public void remove() {
-        pop();
+    public boolean remove(E value) {
+        for (LinkedNode<E> node = head, prev = null; node != null; prev = node, node = node.getNext()) {
+            if (node.getValue().equals(value)) {
+                if (node == head) {
+                    head = node.getNext();
+                }
+
+                if (prev != null) {
+                    prev.setNext(node.getNext());
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override

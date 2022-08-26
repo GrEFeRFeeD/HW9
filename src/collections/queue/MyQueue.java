@@ -43,8 +43,26 @@ public final class MyQueue<E> implements MyFIFOQueue<E> {
     }
 
     @Override
-    public void remove() {
-        poll();
+    public boolean remove(E value) {
+        for (LinkedNode<E> node = head, prev = null; node != null; prev = node, node = node.getNext()) {
+            if (node.getValue().equals(value)) {
+                if (node == head) {
+                    head = node.getNext();
+                }
+
+                if (node == tail) {
+                    tail = prev;
+                }
+
+                if (prev != null) {
+                    prev.setNext(node.getNext());
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
