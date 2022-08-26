@@ -4,7 +4,7 @@ import collections.nodes.LinkedNode;
 
 import java.util.Collection;
 
-public class MyStack<E> implements MyLIFOStack<E> {
+public final class MyStack<E> implements MyLIFOStack<E> {
 
     private LinkedNode<E> head;
     private int elementsCount;

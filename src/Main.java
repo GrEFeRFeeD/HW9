@@ -1,6 +1,8 @@
 import collections.lists.MyArrayList;
 import collections.lists.MyLinkedList;
 import collections.lists.MyList;
+import collections.map.MyHashMap;
+import collections.map.MyMap;
 import collections.queue.MyFIFOQueue;
 import collections.queue.MyQueue;
 import collections.stack.MyLIFOStack;
@@ -11,6 +13,18 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
+
+        /*
+        MyMap<String, Integer> myMap = new MyHashMap<>();
+        for (int i = 0; i < 16; ++i) {
+            myMap.put(String.valueOf(i), i);
+            System.out.println(myMap);
+        }
+
+
+        System.out.println("Clearing");
+        myMap.clear();
+        System.out.println(myMap);*/
 
         /*
         MyList<Integer> myList = new MyLinkedList<>();

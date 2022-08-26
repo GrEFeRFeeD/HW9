@@ -4,7 +4,7 @@ import collections.nodes.LinkedNode;
 
 import java.util.Collection;
 
-public class MyQueue<E> implements MyFIFOQueue<E> {
+public final class MyQueue<E> implements MyFIFOQueue<E> {
 
     private LinkedNode<E> head;
     private LinkedNode<E> tail;
