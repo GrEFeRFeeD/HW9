@@ -11,12 +11,11 @@ public final class MyQueue<E> implements MyFIFOQueue<E> {
     private int elementsCount;
 
     public MyQueue() {
-        head = tail = null;
-        elementsCount = 0;
+        clear();
     }
 
     public MyQueue(Collection<E> collection) {
-        this();
+        clear();
         for (E value : collection) {
             add(value);
         }
@@ -67,9 +66,8 @@ public final class MyQueue<E> implements MyFIFOQueue<E> {
 
     @Override
     public void clear() {
-        while (!isEmpty()) {
-            poll();
-        }
+        head = tail = null;
+        elementsCount = 0;
     }
 
     @Override

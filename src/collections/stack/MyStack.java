@@ -14,12 +14,11 @@ public final class MyStack<E> implements MyLIFOStack<E> {
     }
 
     public MyStack() {
-        head = null;
-        elementsCount = 0;
+        clear();
     }
 
     public MyStack(Collection<E> collection) {
-        this();
+        clear();
         for (E value : collection) {
             push(value);
         }
@@ -53,9 +52,8 @@ public final class MyStack<E> implements MyLIFOStack<E> {
 
     @Override
     public void clear() {
-        while (!isEmpty()) {
-            pop();
-        }
+        head = null;
+        elementsCount = 0;
     }
 
     @Override

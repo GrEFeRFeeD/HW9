@@ -1,11 +1,9 @@
 package collections.map;
 
+import collections.map.exceptions.IncorrectArrayInitializationSizeException;
 import collections.nodes.LinkedNode;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class MyHashMap<K, V> implements MyMap<K, V> {
 
@@ -15,29 +13,42 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     private int elementsCount;
     private int threshold;
 
-    public MyHashMap() {
+    public MyHashMap() throws IncorrectArrayInitializationSizeException{
         clear();
     }
 
-    public MyHashMap(Map<K, V> map) {
+    public MyHashMap(Map<K, V> map) throws IncorrectArrayInitializationSizeException {
         clear();
         for (Map.Entry<K, V> entry : map.entrySet()) {
             put(entry.getKey(), entry.getValue());
         }
     }
 
+    public static<K> int getHash(K key) {
+        return (key == null ? 0 : key.hashCode());
+    }
+
+    @Override
+    public void put(K key, V value) {
+
+        putPair(key, value);
+        if (elementsCount >= threshold) {
+            resize();
+        }
+    }
+
     private void putPair(K key, V value) {
-        int hash = (key == null ? 0 : key.hashCode());
+        int hash = getHash(key);
         int index = hash % array.length;
 
         if (array[index] == null) {
-            array[index] = new EntryNode<K, V>(key, value);
+            array[index] = new EntryNode<>(key, value);
             elementsCount++;
             return;
         }
 
         for (EntryNode<K, V> iNode = array[index]; iNode != null; iNode = (EntryNode<K, V>) iNode.getNext()) {
-            if (hash == iNode.getHash()) {
+            if (iNode.equals(new EntryNode<>(key, value))) {
                 iNode.setValue(value);
                 return;
             }
@@ -63,17 +74,8 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     }
 
     @Override
-    public void put(K key, V value) {
-
-        putPair(key, value);
-        if (elementsCount >= threshold) {
-            resize();
-        }
-    }
-
-    @Override
     public void remove(K key) {
-        int hash = (key == null ? 0 : key.hashCode());
+        int hash = getHash(key);
         int index = hash % array.length;
 
         if (array[index] == null) {
@@ -81,7 +83,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         }
 
         for (EntryNode<K, V> node = array[index], prevNode = null; node != null; prevNode = node, node = (EntryNode<K, V>) node.getNext()) {
-            if (hash == node.getHash()) {
+            if (node.keyEquals(key)) {
                 if (node == array[index]) {
                     array[index] = (EntryNode<K, V>) node.getNext();
                 }
@@ -97,8 +99,11 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     }
 
     @Override
-    public void clear() {
+    public void clear() throws IncorrectArrayInitializationSizeException {
         array = (EntryNode<K, V>[]) new EntryNode[START_CAPACITY];
+        if (array.length <= 0) {
+            throw new IncorrectArrayInitializationSizeException();
+        }
         Arrays.fill(array, null);
         elementsCount = 0;
         threshold = (int) (START_CAPACITY * loadFactor);
@@ -140,9 +145,9 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     }
 
     @Override
-    public V get(K key) {
+    public V get(K key){
 
-        int hash = (key == null ? 0 : key.hashCode());
+        int hash = getHash(key);
         int index = hash % array.length;
 
         if (array[index] == null) {
@@ -150,7 +155,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         }
 
         for (EntryNode<K, V> iNode = array[index]; iNode != null; iNode = (EntryNode<K, V>) iNode.getNext()) {
-            if (hash == iNode.getHash()) {
+            if (iNode.keyEquals(key)) {
                 return iNode.getValue();
             }
         }
@@ -166,7 +171,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         public EntryNode(K key, V value) {
             super(value);
             this.key = key;
-            this.hash = key == null ? 0 : key.hashCode();
+            this.hash = MyHashMap.getHash(key);
         }
 
         public K getKey() {
@@ -175,6 +180,23 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
 
         public int getHash() {
             return hash;
+        }
+
+        public boolean keyEquals(K key) {
+            return MyHashMap.getHash(key) == getHash()
+                    && (key == null ?
+                    getKey() == null : key.equals(getKey()) );
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            EntryNode<K, V> e2 = (EntryNode<K, V>) o;
+            return  (this.getKey()==null ?
+                    e2.getKey()==null : this.getKey().equals(e2.getKey()))  &&
+                    (this.getValue()==null ?
+                            e2.getValue()==null : this.getValue().equals(e2.getValue()));
         }
     }
 }

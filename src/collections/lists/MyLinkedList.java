@@ -3,6 +3,7 @@ package collections.lists;
 import collections.nodes.DoublyLinkedNode;
 import collections.nodes.LinkedNode;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -13,19 +14,14 @@ public final class MyLinkedList<E> implements MyList<E>{
     private int elementsCount;
 
     public MyLinkedList() {
-        head = tail = null;
-        elementsCount = 0;
+        clear();
     }
 
     public MyLinkedList(Collection<E> collection) {
-        this();
+        clear();
         for (E value : collection) {
             add(value);
         }
-    }
-
-    private boolean isEmpty() {
-        return elementsCount == 0;
     }
 
     @Override
@@ -42,26 +38,8 @@ public final class MyLinkedList<E> implements MyList<E>{
         elementsCount++;
     }
 
-    private LinkedNode<E> getNode(int index) throws IndexOutOfBoundsException {
-        if (index < 0 || index >= elementsCount) {
-            throw new IndexOutOfBoundsException();
-        }
-
-        if (index <= elementsCount / 2) {
-            LinkedNode<E> tempNode = head;
-            for (int i = 0; i < index; ++i) {
-                tempNode = tempNode.getNext();
-            }
-
-            return tempNode;
-        }
-
-        LinkedNode<E> tempNode = tail;
-        for (int i = 0; i < elementsCount - 1 - index; ++i) {
-            tempNode = ((DoublyLinkedNode<E>) tempNode).getPrev();
-        }
-
-        return tempNode;
+    private boolean isEmpty() {
+        return elementsCount == 0;
     }
 
     @Override
@@ -92,11 +70,40 @@ public final class MyLinkedList<E> implements MyList<E>{
         elementsCount--;
     }
 
+    private LinkedNode<E> getNode(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= elementsCount) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        if (index <= elementsCount / 2) {
+            return getNodeByHead(index);
+        }
+
+        return getNodeByTail(index);
+    }
+
+    private LinkedNode<E> getNodeByHead(int index) {
+        LinkedNode<E> tempNode = head;
+        for (int i = 0; i < index; ++i) {
+            tempNode = tempNode.getNext();
+        }
+
+        return tempNode;
+    }
+
+    private LinkedNode<E> getNodeByTail(int index) {
+        LinkedNode<E> tempNode = tail;
+        for (int i = 0; i < elementsCount - 1 - index; ++i) {
+            tempNode = ((DoublyLinkedNode<E>) tempNode).getPrev();
+        }
+
+        return tempNode;
+    }
+
     @Override
     public void clear() {
-        while(!isEmpty()) {
-            remove(0);
-        }
+        head = tail = null;
+        elementsCount = 0;
     }
 
     @Override

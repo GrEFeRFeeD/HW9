@@ -2,6 +2,7 @@ package collections.lists;
 
 import collections.lists.MyList;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -21,26 +22,18 @@ public final class MyArrayList<E> implements MyList<E> {
         }
     }
 
+    @Override
+    public void add(E value) {
+        array[headIndex++] = value;
+        expandArray();
+    }
+
     private void expandArray() {
         if (headIndex * 3 / 2 >= array.length) {
             E[] newArray = (E[]) new Object[array.length * 3 / 2];
             System.arraycopy(array, 0, newArray, 0, size());
             array = newArray;
         }
-    }
-
-    private void shrinkArray() {
-        if (headIndex * 3 / 2 < array.length * 2 / 3 && array.length * 2 / 3 + 1 >= 15) {
-            E[] newArray = (E[]) new Object[array.length * 2 / 3 + 1];
-            System.arraycopy(array, 0, newArray, 0, size());
-            array = newArray;
-        }
-    }
-
-    @Override
-    public void add(E value) {
-        array[headIndex++] = value;
-        expandArray();
     }
 
     @Override
@@ -54,6 +47,14 @@ public final class MyArrayList<E> implements MyList<E> {
         shrinkArray();
     }
 
+    private void shrinkArray() {
+        if (headIndex * 3 / 2 < array.length * 2 / 3 && array.length * 2 / 3 + 1 >= 15) {
+            E[] newArray = (E[]) new Object[array.length * 2 / 3 + 1];
+            System.arraycopy(array, 0, newArray, 0, size());
+            array = newArray;
+        }
+    }
+
     @Override
     public void clear() {
         array = (E[]) new Object[15];
@@ -62,7 +63,7 @@ public final class MyArrayList<E> implements MyList<E> {
 
     @Override
     public int size() {
-        return headIndex + 1;
+        return headIndex;
     }
 
     @Override
@@ -90,7 +91,7 @@ public final class MyArrayList<E> implements MyList<E> {
         @Override
         public E next() {
             if (hasNext()) {
-                return array[cursor];
+                return array[cursor++];
             }
 
             return null;
