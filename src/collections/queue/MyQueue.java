@@ -43,7 +43,10 @@ public final class MyQueue<E> implements MyFIFOQueue<E> {
 
     @Override
     public boolean remove(E value) {
-        for (LinkedNode<E> node = head, prev = null; node != null; prev = node, node = node.getNext()) {
+        LinkedNode<E> node = head;
+        LinkedNode<E> prev = null;
+
+        while (node != null) {
             if (node.getValue().equals(value)) {
                 if (node == head) {
                     head = node.getNext();
@@ -59,6 +62,9 @@ public final class MyQueue<E> implements MyFIFOQueue<E> {
 
                 return true;
             }
+
+            prev = node;
+            node = node.getNext();
         }
 
         return false;
