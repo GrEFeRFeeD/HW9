@@ -121,6 +121,19 @@ public final class MyLinkedList<E> implements MyList<E>{
         return new MyLinkedListIterator();
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("MyLinkedList: { ");
+        for (LinkedNode<E> node = head; head != null; head = head.getNext()) {
+            sb.append(node.getValue());
+            if (head.hasNext()) {
+                sb.append(", ");
+            }
+        }
+        sb.append(" }, size=").append(size());
+        return sb.toString();
+    }
+
     private class MyLinkedListIterator implements Iterator<E> {
 
         private int cursor = 0;

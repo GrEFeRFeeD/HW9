@@ -163,6 +163,26 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         return null;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("MyHashMap: { \n");
+        for (int i = 0; i < array.length; ++i) {
+            sb.append("\t ").append(i).append(" : {");
+
+            for(EntryNode<K, V> node = array[i]; node != null; node = (EntryNode<K, V>) node.getNext()) {
+                sb.append(" [").append(node.getKey()).append(" = ").append(node.getValue()).append("], ");
+            }
+
+            if (array[i] != null) {
+                sb.delete(sb.length() - 2, sb.length());
+            }
+
+            sb.append(" },\n");
+        }
+        sb.delete(sb.length() - 2, sb.length()).append("\n}");
+        return sb.toString();
+    }
+
     public static class EntryNode<K, V> extends LinkedNode<V> {
 
         private final K key;
@@ -197,6 +217,15 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
                     e2.getKey()==null : this.getKey().equals(e2.getKey()))  &&
                     (this.getValue()==null ?
                             e2.getValue()==null : this.getValue().equals(e2.getValue()));
+        }
+
+        @Override
+        public String toString() {
+            return "EntryNode{" +
+                    "key=" + key +
+                    ", hash=" + hash +
+                    ", value=" + value +
+                    '}';
         }
     }
 }

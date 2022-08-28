@@ -80,6 +80,13 @@ public final class MyArrayList<E> implements MyList<E> {
         return new MyArrayListIterator();
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("MyArrayList: " + Arrays.toString(array));
+        sb.append(", size=").append(size());
+        return sb.toString();
+    }
+
     private class MyArrayListIterator implements Iterator<E> {
         private int cursor = 0;
 
