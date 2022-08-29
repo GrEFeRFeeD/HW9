@@ -29,6 +29,7 @@ public final class MyQueue<E> implements MyFIFOQueue<E> {
     public void add(E value) {
         LinkedNode<E> newNode = new LinkedNode<>(value, null);
 
+
         if (head == null) {
             head = newNode;
         }
@@ -108,9 +109,9 @@ public final class MyQueue<E> implements MyFIFOQueue<E> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("MyQueue: { ");
-        for (LinkedNode<E> node = head; head != null; head = head.getNext()) {
+        for (LinkedNode<E> node = head; node != null; node = node.getNext()) {
             sb.append(node.getValue());
-            if (head.hasNext()) {
+            if (node.hasNext()) {
                 sb.append(", ");
             }
         }
