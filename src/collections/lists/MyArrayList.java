@@ -82,7 +82,7 @@ public final class MyArrayList<E> implements MyList<E> {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("MyArrayList: " + Arrays.toString(array));
+        StringBuilder sb = new StringBuilder("MyArrayList: " + Arrays.toString(Arrays.copyOf(array, size())));
         sb.append(", size=").append(size());
         return sb.toString();
     }

@@ -10,12 +10,9 @@ public final class MyQueue<E> implements MyFIFOQueue<E> {
     private LinkedNode<E> tail;
     private int elementsCount;
 
-    public MyQueue() {
-        clear();
-    }
+    public MyQueue() {}
 
     public MyQueue(Collection<E> collection) {
-        clear();
         for (E value : collection) {
             add(value);
         }

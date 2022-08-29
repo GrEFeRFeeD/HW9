@@ -13,12 +13,9 @@ public final class MyStack<E> implements MyLIFOStack<E> {
         return elementsCount == 0;
     }
 
-    public MyStack() {
-        clear();
-    }
+    public MyStack() {}
 
     public MyStack(Collection<E> collection) {
-        clear();
         for (E value : collection) {
             push(value);
         }

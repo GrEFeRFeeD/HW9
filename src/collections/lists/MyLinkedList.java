@@ -13,12 +13,9 @@ public final class MyLinkedList<E> implements MyList<E>{
     private LinkedNode<E> tail;
     private int elementsCount;
 
-    public MyLinkedList() {
-        clear();
-    }
+    public MyLinkedList() {}
 
     public MyLinkedList(Collection<E> collection) {
-        clear();
         for (E value : collection) {
             add(value);
         }

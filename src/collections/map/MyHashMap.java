@@ -24,10 +24,6 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         }
     }
 
-    public static<K> int getHash(K key) {
-        return (key == null ? 0 : key.hashCode());
-    }
-
     @Override
     public void put(K key, V value) {
 
@@ -58,6 +54,10 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
                 elementsCount++;
             }
         }
+    }
+
+    private static<K> int getHash(K key) {
+        return (key == null ? 0 : key.hashCode());
     }
 
     private void resize() {

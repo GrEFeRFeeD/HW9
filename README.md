@@ -1,23 +1,23 @@
 # Console output
 
 Testing MyArrayList...<br>
-Testing constructor (1/2) | Initializing list with given collection of {1, 3, 5, 7}<br> 
-MyArrayList: [1, 3, 5, 7, null, null, null, null, null], size=4<br>
+Testing constructor (1/2) | Initializing list with given collection of {1, 3, 5, 7}<br>
+MyArrayList: [1, 3, 5, 7], size=4<br>
 Clearing the list...<br>
-MyArrayList: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], size=0<br>
+MyArrayList: [], size=0<br>
 Testing constructor (2/2) | Initializing list without arguments<br>
-MyArrayList: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], size=0<br>
+MyArrayList: [], size=0<br>
 Filling list with numbers 0 ... 9:<br>
-MyArrayList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, null, null, null, null, null, null, null, null, null, null, null, null], size=10<br>
+MyArrayList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], size=10<br>
 Getting and removing certain elements:<br>
 Removing 9th element (9)<br>
-MyArrayList: [0, 1, 2, 3, 4, 5, 6, 7, 8, null, null, null, null, null, null], size=9<br>
+MyArrayList: [0, 1, 2, 3, 4, 5, 6, 7, 8], size=9<br>
 Removing 0th element (0)<br>
-MyArrayList: [1, 2, 3, 4, 5, 6, 7, 8, null, null, null, null, null, null, null], size=8<br>
+MyArrayList: [1, 2, 3, 4, 5, 6, 7, 8], size=8<br>
 Removing 6th element (7)<br>
-MyArrayList: [1, 2, 3, 4, 5, 6, 8, null, null, null, null, null, null, null, null], size=7<br>
+MyArrayList: [1, 2, 3, 4, 5, 6, 8], size=7<br>
 Removing 2th element (3)<br>
-MyArrayList: [1, 2, 4, 5, 6, 8, null, null, null, null, null, null, null, null, null], size=6<br>
+MyArrayList: [1, 2, 4, 5, 6, 8], size=6<br>
 Getting 1000th element:<br>
 Catched IndexOutOfBoundsException at index 1000<br>
 Removing -1000th element:<br>
