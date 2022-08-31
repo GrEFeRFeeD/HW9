@@ -1,24 +1,24 @@
 package collections.map;
 
 import collections.lists.MyLinkedList;
-import collections.map.exceptions.IncorrectArrayInitializationSizeException;
-import collections.nodes.LinkedNode;
+import collections.lists.MyList;
 
 import java.util.*;
 
 public class MyHashMap<K, V> implements MyMap<K, V> {
 
     private static final int START_CAPACITY = 16;
+    private static final int MAX_CAPACITY = 4096;
     private static final double loadFactor = 0.75;
-    private MyLinkedList<EntryNode<K, V>>[] array;
+    private MyList<EntryNode<K, V>>[] entryNodeListArray;
     private int elementsCount;
     private int threshold;
 
-    public MyHashMap() throws IncorrectArrayInitializationSizeException{
+    public MyHashMap(){
         clear();
     }
 
-    public MyHashMap(Map<K, V> map) throws IncorrectArrayInitializationSizeException {
+    public MyHashMap(Map<K, V> map) {
         clear();
         for (Map.Entry<K, V> entry : map.entrySet()) {
             put(entry.getKey(), entry.getValue());
@@ -29,24 +29,24 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     public void put(K key, V value) {
 
         putPair(key, value);
-        if (elementsCount >= threshold) {
+        if (elementsCount >= threshold && entryNodeListArray.length < MAX_CAPACITY) {
             resize();
         }
     }
 
     private void putPair(K key, V value) {
         int hash = getHash(key);
-        int index = hash % array.length;
+        int index = hash % entryNodeListArray.length;
 
 
-        for (EntryNode<K, V> node : array[index]) {
+        for (EntryNode<K, V> node : entryNodeListArray[index]) {
             if (node.equals(new EntryNode<>(key, value))) {
                 node.setValue(value);
                 return;
             }
         }
 
-        array[index].add(new EntryNode<>(key, value));
+        entryNodeListArray[index].add(new EntryNode<>(key, value));
         elementsCount++;
     }
 
@@ -56,13 +56,13 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
 
     private void resize() {
         Set<EntryNode<K, V>> nodeSet = getNodeSet();
-        MyLinkedList<EntryNode<K, V>>[] newArray = (MyLinkedList<EntryNode<K, V>>[]) new MyLinkedList<?>[array.length * 2];
+        MyLinkedList<EntryNode<K, V>>[] newArray = (MyLinkedList<EntryNode<K, V>>[]) new MyLinkedList<?>[Math.min(entryNodeListArray.length * 2, MAX_CAPACITY)];
         for (int i = 0; i < newArray.length; ++i) {
             newArray[i] = new MyLinkedList<>();
         }
-        this.array = newArray;
+        this.entryNodeListArray = newArray;
         elementsCount = 0;
-        threshold = (int) (2 * array.length * loadFactor);
+        threshold = (int) (2 * entryNodeListArray.length * loadFactor);
 
         for (EntryNode<K, V> node : nodeSet) {
             putPair(node.getKey(), node.getValue());
@@ -72,11 +72,11 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     @Override
     public void remove(K key) {
         int hash = getHash(key);
-        int index = hash % array.length;
+        int index = hash % entryNodeListArray.length;
 
         int nodeIndex = 0;
         boolean isNodeFound = false;
-        for (EntryNode<K, V> node : array[index]) {
+        for (EntryNode<K, V> node : entryNodeListArray[index]) {
             if (node.keyEquals(key)) {
                 isNodeFound = true;
                 break;
@@ -85,18 +85,15 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         }
 
         if (isNodeFound) {
-            array[index].remove(nodeIndex);
+            entryNodeListArray[index].remove(nodeIndex);
         }
     }
 
     @Override
-    public void clear() throws IncorrectArrayInitializationSizeException {
-        array = (MyLinkedList<EntryNode<K,V>>[]) new MyLinkedList<?>[START_CAPACITY];
-        if (array.length <= 0) {
-            throw new IncorrectArrayInitializationSizeException();
-        }
-        for (int i = 0; i < array.length; ++i) {
-            array[i] = new MyLinkedList<>();
+    public void clear() {
+        entryNodeListArray = (MyLinkedList<EntryNode<K,V>>[]) new MyLinkedList<?>[START_CAPACITY];
+        for (int i = 0; i < entryNodeListArray.length; ++i) {
+            entryNodeListArray[i] = new MyLinkedList<>();
         }
         elementsCount = 0;
         threshold = (int) (START_CAPACITY * loadFactor);
@@ -109,7 +106,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
 
     public Set<K> getKeySet() {
         Set<K> keySet = new HashSet<>();
-        for (MyLinkedList<EntryNode<K, V>> list : array) {
+        for (MyList<EntryNode<K, V>> list : entryNodeListArray) {
             for (EntryNode<K, V> node : list) {
                 keySet.add(node.getKey());
             }
@@ -119,7 +116,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
 
     public Set<V> getValueSet() {
         Set<V> valueSet = new HashSet<>();
-        for (MyLinkedList<EntryNode<K, V>> list : array) {
+        for (MyList<EntryNode<K, V>> list : entryNodeListArray) {
             for (EntryNode<K, V> node : list) {
                 valueSet.add(node.getValue());
             }
@@ -129,7 +126,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
 
     public Set<EntryNode<K, V>> getNodeSet() {
         Set<EntryNode<K, V>> nodeSet = new HashSet<>();
-        for (MyLinkedList<EntryNode<K, V>> list : array) {
+        for (MyList<EntryNode<K, V>> list : entryNodeListArray) {
             for (EntryNode<K, V> node : list) {
                 nodeSet.add(new EntryNode<>(node.getKey(), node.getValue()));
             }
@@ -141,9 +138,9 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     public V get(K key){
 
         int hash = getHash(key);
-        int index = hash % array.length;
+        int index = hash % entryNodeListArray.length;
 
-        for (EntryNode<K, V> node : array[index]) {
+        for (EntryNode<K, V> node : entryNodeListArray[index]) {
             if (node.keyEquals(key)) {
                 return node.getValue();
             }
@@ -157,7 +154,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         StringBuilder sb = new StringBuilder("MyHashMap: { \n");
 
         int arrayIndex = 0;
-        for (MyLinkedList<EntryNode<K, V>> list : array) {
+        for (MyList<EntryNode<K, V>> list : entryNodeListArray) {
             sb.append("\t ").append(arrayIndex).append(" : {");
 
             for (EntryNode<K, V> node : list) {

@@ -1,9 +1,7 @@
 package collections.map;
 
 import collections.MyCollectionTester;
-import collections.map.exceptions.IncorrectArrayInitializationSizeException;
 
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,34 +17,19 @@ public class MyHashMapTester implements MyCollectionTester {
         startMap.put(10, "Ten");
         startMap.put(100, "One hundred");
         System.out.println("Testing constructor (1/2) | Initializing map with " + startMap);
+        map = new MyHashMap<>(startMap);
 
-        try {
-            map = new MyHashMap<>(startMap);
-        } catch (IncorrectArrayInitializationSizeException e) {
-            System.out.println("Catched IncorrectArrayInitializationSizeException: " + e.getMessage());
-            return;
-        }
 
         System.out.println("Getting keySet: " + map.getKeySet());
         System.out.println("Getting valueSet: " + map.getValueSet());
         System.out.println("Getting nodeSet: " + map.getNodeSet());
         System.out.println("Getting size: " + map.size());
 
-        try {
-            map.clear();
-        } catch (IncorrectArrayInitializationSizeException e) {
-            System.out.println("Catched IncorrectArrayInitializationSizeException: " + e.getMessage());
-            return;
-        }
+        map.clear();
         System.out.println("Clearing map:" + map.getNodeSet());
 
         System.out.println("Testing constructor (2/2) | Initializing map without arguments");
-        try {
-            map = new MyHashMap<>();
-        } catch (IncorrectArrayInitializationSizeException e) {
-            System.out.println("Catched IncorrectArrayInitializationSizeException: " + e.getMessage());
-            return;
-        }
+        map = new MyHashMap<>();
 
         System.out.println("Putting new pair [0, Zero]");
         map.put(0, "Zero");

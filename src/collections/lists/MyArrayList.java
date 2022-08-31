@@ -1,7 +1,5 @@
 package collections.lists;
 
-import collections.lists.MyList;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;

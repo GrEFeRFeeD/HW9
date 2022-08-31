@@ -1,8 +1,6 @@
 package collections.queue;
 
 import collections.MyCollectionTester;
-import collections.lists.MyArrayList;
-import collections.map.MyMap;
 
 import java.util.List;
 
